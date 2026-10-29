@@ -9,15 +9,61 @@
 
 Set up Swift exactly the way Lab 2 uses it, and confirm it shows a robot inside the notebook.
 
-### 1. Install
+### Quick Setup (Automated)
 
+You can run the one-click setup script for your platform:
+
+**Linux / macOS (Ubuntu):**
+```bash
+chmod +x setup.sh
+./setup.sh
 ```
+
+**Windows (PowerShell):**
+```powershell
+.\setup.ps1
+```
+
+The script automatically creates the `.venv`, isolates `PYTHONPATH` from ROS 2 conflicts, installs all requirements, and runs `fix_swift.py`.
+
+---
+
+### Manual Setup (Step-by-Step)
+
+#### 1. Create and Activate Virtual Environment (`.venv`)
+
+**On Linux / macOS:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**On Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+*(If script execution is disabled on PowerShell, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` once)*
+
+**On Windows (Command Prompt):**
+```cmd
+python -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
 python fix_swift.py
 ```
 
-- `requirements.txt` pins `websockets==12.0` so Swift does not hang
-- `fix_swift.py` fixes robot meshes not showing in Swift on **Windows** (safe to run on macOS/Linux)
+- `requirements.txt` pins `websockets==12.0` so Swift does not hang, and includes `xacro` / `pyyaml` for URDF parsing.
+- If you use ROS 2 on Ubuntu and encounter resolver warnings during `pip install`, you can bypass ROS `PYTHONPATH` using:
+  ```bash
+  PYTHONPATH= pip install -r requirements.txt
+  ```
+- `fix_swift.py` fixes robot meshes not showing in Swift on **Windows** (safe to run on macOS/Linux).
 
 ### When to run `fix_swift.py`
 
@@ -30,9 +76,9 @@ python fix_swift.py
 
 Running it twice is fine, it prints `already patched`.
 
-### 2. Open the practice notebook
+### 3. Open the practice notebook
 
-1. Open `practice.ipynb` in VS Code and pick a **Python 3.10–3.12** kernel.
+1. Open `practice.ipynb` in VS Code and select the kernel from `.venv` (Python 3.10–3.12).
 2. Run the **0 - Setup** cell. The toy arm should appear under the cell — then Swift is ready for Lab 2.
 3. Run the rest top to bottom, filling in the lines marked `# edit here`.
 
@@ -103,6 +149,7 @@ the same way as the Lab 2 Setup cell. Sections 1–5 always use the toy arm, not
 
 - **`practice.ipynb`** — RTB practice notebook, inverse kinematics basics, shown in Swift.
 - **`check_robot.py`** — `python check_robot.py`, no args. Checks your URDF for Lab 2, then opens it in Swift with joint sliders.
+- **`setup.sh`**, **`setup.ps1`** — Automated one-command setup scripts for Linux/Ubuntu and Windows.
 - **`toy_robot/`** — toy 2-link arm (URDF + STL meshes) used by sections 1–5 of `practice.ipynb`.
 - **`my_robot/`** — put your own robot here. Used by `check_robot.py` and section 6 of `practice.ipynb`.
 - **`fix_swift.py`**, **`requirements.txt`** — same install as Lab 2.
@@ -112,6 +159,8 @@ the same way as the Lab 2 Setup cell. Sections 1–5 always use the toy arm, not
 | Problem | Fix |
 |---|---|
 | Swift **hangs** at `env.launch` | `pip install "websockets==12.0"`, then restart the kernel |
+| `ModuleNotFoundError: No module named 'xacro'` | `pip install xacro pyyaml`, then restart the kernel |
+| ROS dependency conflicts during `pip install` (Ubuntu) | run `PYTHONPATH= pip install -r requirements.txt` |
 | Arm **does not show** / *"a client-side exception has occurred"* (Windows) | `python fix_swift.py`, then restart the kernel |
 | `fix_swift.py` prints `target line not found` | see **Manual fix** below |
 | `FileNotFoundError: toy_robot/robot.urdf` | open this project folder as the VS Code workspace |
