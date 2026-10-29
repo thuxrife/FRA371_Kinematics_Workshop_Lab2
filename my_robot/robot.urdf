@@ -106,8 +106,8 @@
     name="joint_2_link">
     <inertial>
       <origin
-        xyz="-0.0794258655611038 -1.11022302462516E-15 -1.45783835440668E-15"
-        rpy="0 0 0" />
+        xyz="0 0.0794258655611038 0"
+        rpy="0 0 -1.5707963267948966" />
       <mass
         value="9.82047843595602" />
       <inertia
@@ -121,7 +121,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 0 -1.5707963267948966" />
       <geometry>
         <mesh
           filename="package://my_robot/meshes/joint_2_link.STL" />
@@ -135,7 +135,7 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 0 -1.5707963267948966" />
       <geometry>
         <mesh
           filename="package://my_robot/meshes/joint_2_link.STL" />
@@ -147,7 +147,7 @@
     type="revolute">
     <origin
       xyz="0 0 0"
-      rpy="1.5708 0 0" />
+      rpy="0 -1.5707963267948966 1.5707963267948966" />
     <parent
       link="joint_1_link" />
     <child
@@ -204,8 +204,8 @@
     name="joint_3_joint"
     type="prismatic">
     <origin
-      xyz="0.099988 0.0015514 0"
-      rpy="1.5708 0 1.5708" />
+      xyz="0 -0.099988 -0.0015514"
+      rpy="1.5707963267948966 0 0" />
     <parent
       link="joint_2_link" />
     <child
